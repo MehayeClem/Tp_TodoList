@@ -1,0 +1,22 @@
+{
+  "name": "tp_todolist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesuisuncoucous/Tp_TodoList.git"
+  },
+  "author": "*",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jesuisuncoucous/Tp_TodoList/issues"
+  },
+  "homepage": "https://github.com/jesuisuncoucous/Tp_TodoList#readme",
+  "dependencies": {
+    "expressjs": "^1.0.1"
+  }
+}
