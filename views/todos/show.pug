@@ -1,0 +1,20 @@
+html
+    head
+        title Todo
+        style
+            include ../style.css
+    body
+        a(href='/todos') Ma Todolist
+        h1 Todo : 
+        p Message : #{todo.message}
+            br
+            | Completion : #{todo.completion} 
+            br 
+            | Created_at : #{todo.created_at} 
+            br 
+            | Updated_at : #{todo.updated_at}
+            br
+            br
+            a(href='/todos/' + todo.rowid + '/edit') Modifier
+            form(action="/todos/" + todo.rowid + "?_method=DELETE" method="post")
+                input(type="submit" value="Supprimer")

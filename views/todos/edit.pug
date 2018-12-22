@@ -1,0 +1,24 @@
+html
+    head
+        title= title
+        style
+            include ../style.css
+    body
+        a(href='/todos') Ma Todolist
+        h1= title
+        form(action="/todos/" + id + "?_method=" + _method method="post")
+            h2 Message
+            if todo
+                input(type="text" name="message" placeholder="Faire le ménage" value=todo.message)
+            else
+                input(type="text" name="message" placeholder="Faire le ménage")
+
+            h2 Completion
+            select(name="completion")
+                option(value="not done") Pas fait
+                if todo && todo.completion == "done"
+                    option(value="done" selected) Fait
+                else
+                    option(value="done") Fait
+
+            input#submit(type="submit" value="Valider")

@@ -1,0 +1,31 @@
+html
+    head
+        title Todolist
+        style
+            include ../style.css
+    body
+        a(href='/todos/add') Ajouter une Todo
+        h1 Ma Todolist :
+        table
+            tr
+                td id
+                td Message
+                td Completion
+                td Created_at
+                td Updated_at
+                
+            each todo in todos
+                tr
+                    td= todo.rowid
+                    td= todo.message 
+                    td= todo.completion 
+                    td= todo.created_at
+                    td= todo.updated_at
+                    td 
+                        a(href='/todos/' + todo.rowid) Afficher
+                    td 
+                        a(href='/todos/' + todo.rowid + '/edit') Modifier
+                    td
+                        form(action="/todos/" + todo.rowid + "?_method=DELETE" method="post")
+                            input(type="submit" value="Supprimer")
+                
