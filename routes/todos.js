@@ -94,7 +94,7 @@ router.delete('/:todoId', (req, res) => {
     .then(() => { 
         res.format({
             html: () => { res.redirect(303, '/todos') },
-            'application/json': () => { res.json({status: 'success'}) }
+            'application/json': () => { res.json({status: 'success'})}
         })
     })
     .catch(() => res.json({status: 'failed'}))
