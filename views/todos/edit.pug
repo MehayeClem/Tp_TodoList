@@ -21,4 +21,10 @@ html
                 else
                     option(value="done") Fait
 
+            h2 UserId
+            if todo
+                input(type="text" name="userId" placeholder="0" value=todo.userId)
+            else
+                input(type="text" name="userId" placeholder="0")
+
             input#submit(type="submit" value="Valider")

@@ -4,6 +4,8 @@ html
         style
             include ../style.css
     body
+        a(href='/users') Users
+        br
         a(href='/todos/add') Ajouter une Todo
         h1 Ma Todolist :
         table
@@ -11,16 +13,18 @@ html
                 td id
                 td Message
                 td Completion
-                td Created_at
-                td Updated_at
+                td UserId
+                td CreatedAt
+                td UpdatedAt
                 
             each todo in todos
                 tr
                     td= todo.rowid
                     td= todo.message 
-                    td= todo.completion 
-                    td= todo.created_at
-                    td= todo.updated_at
+                    td= todo.completion
+                    td= todo.userId 
+                    td= todo.createdAt
+                    td= todo.updatedAt
                     td 
                         a(href='/todos/' + todo.rowid) Afficher
                     td 

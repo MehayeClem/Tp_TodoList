@@ -13,7 +13,7 @@ app.set('view engine', 'pug')
 
 db.open('todolist.db').then(() => {
     return Promise.all([
-        db.run("CREATE TABLE IF NOT EXISTS todos (message, completion, created_at, updated_at, userId)"),
+        db.run("CREATE TABLE IF NOT EXISTS todos (message, completion, createdAt, updatedAt, userId)"),
         db.run("CREATE TABLE IF NOT EXISTS users (firstname, lastname, username, password, email, createdAt, updatedAt)")
     ])
 })

@@ -1,0 +1,41 @@
+html
+    head
+        title Users
+        style
+            include ../style.css
+    body
+        a(href='/todos') Todolist
+        br
+        a(href='/users/add') Ajouter un User
+        h1 Mes Users :
+        table
+            tr
+                td id
+                td firstname
+                td lastname
+                td username
+                td password
+                td email
+                td createdAt
+                td updatedAt
+                
+            each user in users
+                tr
+                    td= user.rowid
+                    td= user.firstname 
+                    td= user.lastname 
+                    td= user.username
+                    td= user.password
+                    td= user.email
+                    td= user.createdAt
+                    td= user.updatedAt
+                    td 
+                        a(href='/users/' + user.rowid) Afficher
+                    td 
+                        a(href='/users/' + user.rowid + '/todos') Todos
+                    td 
+                        a(href='/users/' + user.rowid + '/edit') Modifier
+                    td
+                        form(action="/users/" + user.rowid + "?_method=DELETE" method="post")
+                            input(type="submit" value="Supprimer")
+                

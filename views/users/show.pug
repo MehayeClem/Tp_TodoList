@@ -1,0 +1,26 @@
+html
+    head
+        title User
+        style
+            include ../style.css
+    body
+        a(href='/users') Users
+        h1 User :
+        p Firstname : #{user.firstname}
+            br
+            | Lastname : #{user.lastname} 
+            br
+            | Username : #{user.username} 
+            br
+            | Password : #{user.password} 
+            br
+            | Email : #{user.email} 
+            br 
+            | CreatedAt : #{user.createdAt} 
+            br 
+            | UpdatedAt : #{user.updatedAt}
+            br
+            br
+            a(href='/users/' + user.rowid + '/edit') Modifier
+            form(action="/users/" + user.rowid + "?_method=DELETE" method="post")
+                input(type="submit" value="Supprimer")

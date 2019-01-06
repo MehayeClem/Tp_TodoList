@@ -2,7 +2,7 @@ const router = require('express').Router()
 const Users = require('./../models/users')
 
 
-router.post('/',(res, req) => {
+router.post('/',(req, res) => {
     let firstname = req.body.firstname
     let lastname = req.body.lastname
     let username = req.body.username
@@ -10,19 +10,19 @@ router.post('/',(res, req) => {
     let email = req.body.email
 
     if (!firstname || /^ *$/.test(firstname))
-    res.end("Mauvaises valeurs")
+    res.end("Mauvaises valeurs firstname")
     if (!lastname || /^ *$/.test(lastname))
-    res.end("Mauvaises valeurs")
+    res.end("Mauvaises valeurs lastname")
     if (!username || /^ *$/.test(username))
-    res.end("Mauvaises valeurs")
+    res.end("Mauvaises valeurs username")
     if (!password || /^ *$/.test(password))
-    res.end("Mauvaises valeurs")
+    res.end("Mauvaises valeurs password")
     if (!email || /^ *$/.test(email))
-    res.end("Mauvaises valeurs")
+    res.end("Mauvaises valeurs email")
 
-    generateHash(password)
+    hashPwd = Users.generateHash(password)
     
-    Users.createUser(firstname, lastname, username, password, email)
+    Users.createUser(firstname, lastname, username, hashPwd, email)
     .then(() => { 
         res.format({
             html: () => { res.redirect('/users') },
@@ -42,22 +42,44 @@ router.get('/add',(req, res) => {
 })
 
 router.get('/:userId/edit',(req, res)=> {
-    let id = req.params.todoId
+    let id = req.params.userId
     if (!/^[0-9]+$/.test(id))
-    res.end("Mauvais id")
+        res.end("Mauvais id")
 
-    Users.findTodo(id)
+    Users.findUser(id)
     .then((success) =>
     res.format({
         html: () => {
-            res.render('users/show', {
-                todo: success
+            res.render('users/edit', {
+                id: req.params.userId,
+                title: "Modifier un User",
+                _method: "PATCH",
+                user: success
             })
         },
         'application/json': () => {res.json(success)}
     })
 )
 .catch(() => res.json({status: 'failed'}))
+})
+
+router.get('/:userId', (req, res) => {
+    let id = req.params.userId
+    if (!/^[0-9]+$/.test(id))
+        res.end("Mauvais id")
+
+    Users.findUser(id)
+    .then((success) => 
+        res.format({
+            html: () => { 
+                res.render('users/show', {
+                    user: success
+                }) 
+            },
+            'application/json': () => { res.json(success) }
+        })
+    )
+    .catch(() => res.json({status: 'failed'}))
 })
 
 router.get('/', (req, res) => {
@@ -68,7 +90,24 @@ router.get('/', (req, res) => {
     .then((success) =>
         res.format({
             html: () => {
-                res;render('todos/index' , {
+                res.render('users/index' , {
+                    users: success
+                })
+            },
+            'application/json' : () => {res.json(success)}
+        })
+    )
+    .catch(() => res.json ({status: 'failed'}))
+})
+
+router.get('/:userId/todos', (req, res) => {
+    let userId = req.params.userId
+
+    Users.getTodos(userId)
+    .then((success) =>
+        res.format({
+            html: () => {
+                res.render('todos/index' , {
                     todos: success
                 })
             },
@@ -79,7 +118,7 @@ router.get('/', (req, res) => {
 })
 
 router.delete('/:userId',(req, res) => {
-    let id = req.params.todoId
+    let id = req.params.userId
     if (!/^[0-9]+$/.test(id))
         res.end("Mauvais id")
     
@@ -93,7 +132,7 @@ router.delete('/:userId',(req, res) => {
     .catch(() => res.json({status: 'failed'}))
 })
 
-router.patch('/:userId' , (req, res, next) => {
+router.patch('/:userId' , (req, res) => {
     let id = req.params.userId
     if(!/^[0-9]+$/.test(id))
         res.end("Mauvais id")
@@ -103,6 +142,7 @@ router.patch('/:userId' , (req, res, next) => {
     let username = req.body.username
     let password = req.body.password
     let email = req.body.email
+
     if (!firstname || /^ *$/.test(firstname))
     firstname= false
     if (!lastname || /^ *$/.test(lastname))

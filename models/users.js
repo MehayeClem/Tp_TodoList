@@ -24,7 +24,7 @@ module.exports = {
             if (/^[0-9]+$/.test(offset))
                 query += " LIMIT " + offset + "," + limit
         }
-        
+
         return db.all(query)
     },
     deleteUser(id) {
@@ -35,35 +35,36 @@ module.exports = {
         let date =  module.exports.getDate()
 
         let query = "UPDATE users SET"
-        if (firstname != false){
-            query += ","    
-        query += " firstname = '" + firstname + "'"
+        if (firstname != false){  
+            query += " firstname = '" + firstname + "'"
         }
         if (lastname != false){
             query += ","    
-        query += " lastname = '" + lastname + "'"
+            query += " lastname = '" + lastname + "'"
         }
         if (username != false){
             query += ","    
-        query += " username = '" + username + "'"
+            query += " username = '" + username + "'"
         }
         if (password != false){
+            password = this.generateHash(password)
             query += ","    
-        query += " password = '" + password + "'"
+            query += " password = '" + password + "'"
         }
         if (email != false){
             query += ","    
-        query += " email = '" + email + "'"
+            query += " email = '" + email + "'"
         }
 
-        query += ", updated_at = '" + date + "' WHERE rowid = " + id
+        query += ", updatedAt = '" + date + "' WHERE rowid = " + id
         return db.run(query)
     },
     generateHash(password) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     },
-    validPassword(password) {
-        return bcrypt.compareSync(password, this.local.password)
+    getTodos(id) {
+        let query = "SELECT rowid, * FROM todos WHERE userId = '" + id + "'"
+        return db.all(query)
     }
 
 }

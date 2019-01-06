@@ -1,0 +1,37 @@
+html
+    head
+        title= title
+        style
+            include ../style.css
+    body
+        a(href='/users') Users
+        h1= title
+        form(action="/users/" + id + "?_method=" + _method method="post")
+            h2 Firstname
+            if user
+                input(type="text" name="firstname" placeholder="firstname" value=user.firstname)
+            else
+                input(type="text" name="firstname" placeholder="firstname")
+
+            h2 Lastname
+            if user
+                input(type="text" name="lastname" placeholder="lastname" value=user.lastname)
+            else
+                input(type="text" name="lastname" placeholder="lastname")
+
+            h2 Username
+            if user
+                input(type="text" name="username" placeholder="username" value=user.username)
+            else
+                input(type="text" name="username" placeholder="username")
+
+            h2 Email
+            if user
+                input(type="text" name="email" placeholder="email" value=user.email)
+            else
+                input(type="text" name="email" placeholder="email")
+
+            h2 Password
+            input(type="text" name="password" placeholder="password")
+
+            input#submit(type="submit" value="Valider")

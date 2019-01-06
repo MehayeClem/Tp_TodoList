@@ -9,10 +9,12 @@ html
         p Message : #{todo.message}
             br
             | Completion : #{todo.completion} 
+            br
+            | UserId : #{todo.userId} 
             br 
-            | Created_at : #{todo.created_at} 
+            | CreatedAt : #{todo.createdAt} 
             br 
-            | Updated_at : #{todo.updated_at}
+            | UpdatedAt : #{todo.updatedAt}
             br
             br
             a(href='/todos/' + todo.rowid + '/edit') Modifier

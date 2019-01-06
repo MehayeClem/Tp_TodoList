@@ -6,9 +6,10 @@ module.exports = {
         let date = d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds()
         return date
     },
-    createTodo(message, completion) {
+    createTodo(message, completion, userId) {
         let date = module.exports.getDate()
-        let query = "INSERT INTO todos VALUES ('" + message + "', '" + completion + "', '" + date + "', '" + date + "')"
+        let query = "INSERT INTO todos VALUES ('" + message + "', '" + completion + "', '" + date + "', '" + date + "', '" + userId + "')"
+        console.log(query)
         return db.run(query)
     },
     findTodo(id) {
@@ -33,7 +34,7 @@ module.exports = {
         let query = "DELETE FROM todos WHERE rowid = " + id
         return db.run(query)
     },
-    patchTodo(id, completion, message) {
+    patchTodo(id, completion, message, userId) {
         let date = module.exports.getDate()
 
         let query = "UPDATE todos SET"
@@ -48,7 +49,12 @@ module.exports = {
             query += " message = '" + message + "'"
         }
 
-        query += ", updated_at = '" + date + "' WHERE rowid = " + id
+        if (userId != false) 
+            if (completion != false || message != false) 
+                query += ","
+            query += " userId = '" + userId + "'"
+
+        query += ", updatedAt = '" + date + "' WHERE rowid = " + id
         return db.run(query)
     }
 }

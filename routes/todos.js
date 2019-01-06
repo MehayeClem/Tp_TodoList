@@ -4,13 +4,16 @@ const Todos = require('./../models/todos')
 router.post('/', (req, res) => {
     let message = req.body.message
     let completion = req.body.completion
+    let userId = req.body.userId
     
     if (!message || /^ *$/.test(message))
         res.end("Mauvaises valeurs")
     if (!completion || /^ *$/.test(completion) || (completion != "done" && completion != "not done"))
         res.end("Mauvaises valeurs")
+    if (!userId || !/^[0-9]+$/.test(userId))
+        userId = false
     
-    Todos.createTodo(message, completion)
+    Todos.createTodo(message, completion, userId)
     .then(() => { 
         res.format({
             html: () => { res.redirect('/todos') },
@@ -107,12 +110,15 @@ router.patch('/:todoId', (req, res, next) => {
 
     let message = req.body.message
     let completion = req.body.completion
+    let userId = req.body.userId
     if (!message || /^ *$/.test(message))
         message = false
     if (!completion || /^ *$/.test(completion) || (completion != "done" && completion != "not done"))
         completion = false
+    if (!userId || !/^[0-9]+$/.test(userId))
+        userId = false
     
-    Todos.patchTodo(id, completion, message)
+    Todos.patchTodo(id, completion, message, userId)
     .then(() => { 
         res.format({
             html: () => {  res.redirect('/todos') },
